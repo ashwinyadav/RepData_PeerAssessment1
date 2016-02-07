@@ -1,0 +1,12 @@
+y
+library(dplyr)
+activity.table <- read.csv("activity.csv", na.strings = "NA", colClasses = c("numeric", "Date", "factor"))
+activity.bydate <- group_by(activity.table, date)
+summarise(activity.bydate, totalsteps = sum(steps, na.rm = TRUE))
+levels(activity.table$interval)[nchar(levels(activity.table$interval)) == 1] <- paste("000", levels(activity.table$interval)[nchar(levels(activity.table$interval)) == 1], sep = "")
+levels(activity.table$interval)[nchar(levels(activity.table$interval)) == 2] <- paste("00", levels(activity.table$interval)[nchar(levels(activity.table$interval)) == 2], sep = "")
+levels(activity.table$interval)[nchar(levels(activity.table$interval)) == 3] <- paste("0", levels(activity.table$interval)[nchar(levels(activity.table$interval)) == 3], sep = "")
+levels(activity.table$interval) <- format(strptime(levels(activity.table$interval), format = "%H%M"), "%H:%M")
+head(activity.table)
+activity.bydate <- group_by(activity.table, date)
+summarise(activity.bydate, totalsteps = sum(steps, na.rm = TRUE))
